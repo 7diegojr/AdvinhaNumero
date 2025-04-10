@@ -1,0 +1,16 @@
+git config --global user.name 7diegojr
+git config --global user.email dfsntsjunior@gmail.com
+
+Abrir o terminal - CRTL + '
+
+Criar um projeto react native com expo:
+npx create-expo-app@latest AdivinhaNumero --template blank
+
+cd AdivinhaNumero
+
+Extensão Pesquisa React -> ES7+ react/redux/react
+
+atualizar os pacotes do node
+npm i
+executar o projeto
+npx expo start --localhost --android
