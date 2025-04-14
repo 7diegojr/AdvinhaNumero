@@ -12,5 +12,5 @@ Extensão Pesquisa React -> ES7+ react/redux/react
 
 atualizar os pacotes do node
 npm i
-executar o projeto
+executar o projeto.
 npx expo start --localhost --android
