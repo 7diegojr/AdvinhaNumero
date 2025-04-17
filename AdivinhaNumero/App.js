@@ -23,7 +23,7 @@ export default function App() {
   const checkGuess = () => {
     const userGuess = parseInt(guess);
     
-    if (isNaN(userGuess)) {  // Corrigido aqui
+    if (isNaN(userGuess)) {
       Alert.alert('Valor inválido', 'Por favor, digite um número');
       return;
     }
@@ -59,52 +59,51 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SafeAreaView style={styles.titleBox}>
-        <Text style={styles.titleText}>Jogo de Adivinhação</Text>
-      </SafeAreaView>
-
       <View style={styles.content}>
-        <Text style={styles.subTitle}>Adivinhe o número (0-100)</Text>
+        <View style={styles.centeredContent}>
+          <Text style={styles.titleText}>Jogo de Adivinhação</Text>
+          <Text style={styles.subTitle}>Adivinhe o número (0-100)</Text>
 
-        <Text style={styles.messageText}>{message}</Text>
-        
-        {!gameOver && (
-          <View>
-            <Text style={styles.label}>Seu palpite:</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setGuess}
-              value={guess}
-              placeholder='Digite um número...'
-              keyboardType='numeric'
+          <Text style={styles.messageText}>{message}</Text>
+          
+          {!gameOver && (
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Seu palpite:</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={setGuess}
+                value={guess}
+                placeholder='Digite um número...'
+                keyboardType='numeric'
+              />
+            </View>
+          )}
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={gameOver ? startNewGame : checkGuess}
+          >
+            <Ionicons 
+              name={gameOver ? "refresh" : "checkmark"} 
+              size={24} 
+              color={"#edf2f4"} 
             />
-          </View>
-        )}
+            <Text style={styles.text}>
+              {gameOver ? 'Jogar Novamente' : 'Verificar'}
+            </Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={gameOver ? startNewGame : checkGuess}
-        >
-          <Ionicons 
-            name={gameOver ? "refresh" : "checkmark"} 
-            size={24} 
-            color={"#edf2f4"} 
-          />
-          <Text style={styles.text}>
-            {gameOver ? 'Jogar Novamente' : 'Verificar'}
-          </Text>
-        </TouchableOpacity>
-
-        {history.length > 0 && (
-          <View style={styles.historyContainer}>
-            <Text style={styles.historyTitle}>Tentativas anteriores:</Text>
-            {history.map((item, index) => (
-              <Text key={index} style={styles.historyItem}>
-                {item.guess} (é {item.hint})
-              </Text>
-            ))}
-          </View>
-        )}
+          {history.length > 0 && (
+            <View style={styles.historyContainer}>
+              <Text style={styles.historyTitle}>Tentativas anteriores:</Text>
+              {history.map((item, index) => (
+                <Text key={index} style={styles.historyItem}>
+                  {item.guess} (é {item.hint})
+                </Text>
+              ))}
+            </View>
+          )}
+        </View>
       </View>
 
       <StatusBar style="light" />
@@ -115,46 +114,53 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#edf2f4',
-  },
-  titleBox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 120,
-    backgroundColor: '#162a7d',
-    borderBottomStartRadius: 25,
-    borderBottomEndRadius: 25,
-  },
-  titleText: {
-    color: '#edf2f4',
-    fontSize: 28,
-    fontWeight: 'bold',
+    backgroundColor: '#212121',
   },
   content: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 25,
     width: '100%',
-    backgroundColor: '#ededed',
+    backgroundColor: '#212121',
+  },
+  centeredContent: {
+    width: '100%',
+    maxWidth: 400, // Define uma largura máxima para melhor visualização
+    alignItems: 'center',
+  },
+  titleText: {
+    color: '#f5f2f2',
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   subTitle: {
     fontSize: 22,
     textAlign: 'center',
-    color: '#162a7d',
+    color: '#f5f2f2',
     fontWeight: 'bold',
     marginBottom: 20,
   },
   label: {
-    color: '#162a7d',
+    color: '#f5f2f2',
     fontSize: 18,
     fontWeight: '500',
     marginTop: 10,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    width: '100%',
+    alignItems: 'center',
   },
   input: {
     height: 45,
     width: '100%',
+    maxWidth: 300,
     fontSize: 18,
-    borderColor: '#162a7d',
-    borderWidth: 2,
+    borderColor: '#0477db',
+    borderWidth: 3,
     borderRadius: 15,
     marginVertical: 8,
     backgroundColor: '#ffffff',
@@ -162,24 +168,25 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
+    maxWidth: 300,
     paddingVertical: 14,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#d61b1b',
+    backgroundColor: '#0477db',
     borderRadius: 15,
     marginTop: 25,
     marginBottom: 15,
   },
   text: {
-    color: '#edf2f4',
+    color: '#f5f2f2',
     fontSize: 22,
     fontWeight: 'bold',
     marginLeft: 8,
   },
   messageText: {
-    fontSize: 18,
-    color: '#162a7d',
+    fontSize: 17,
+    color: '#0477db',
     fontWeight: '500',
     textAlign: 'center',
     marginVertical: 15,
@@ -189,18 +196,20 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: '#ffffff',
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#162a7d',
+    borderWidth: 3,
+    borderColor: '#0477db',
+    width: '100%',
+    maxWidth: 300,
   },
   historyTitle: {
     fontSize: 16,
-    color: '#162a7d',
+    color: '#0477db',
     fontWeight: 'bold',
     marginBottom: 8,
   },
   historyItem: {
     fontSize: 15,
-    color: '#d61b1b',
+    color: '#030303',
     marginVertical: 4,
   },
 });
